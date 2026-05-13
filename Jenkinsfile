@@ -18,12 +18,10 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-credentials',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS'
                 )]) {
-                    sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                    '''
+                    sh 'echo $PASS | docker login -u $USER --password-stdin'
                 }
             }
         }
@@ -37,9 +35,9 @@ pipeline {
         stage('Deploy Container') {
             steps {
                 sh '''
-                    docker stop myapp-container || true
-                    docker rm myapp-container || true
-                    docker run -d -p 5000:5000 --name myapp-container $DOCKER_IMAGE:$DOCKER_TAG
+                docker stop myapp-container || true
+                docker rm myapp-container || true
+                docker run -d -p 5050:5050 --name myapp-container $DOCKER_IMAGE:$DOCKER_TAG
                 '''
             }
         }
