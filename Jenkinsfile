@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "deepa234/myimages"
+        DOCKER_IMAGE = "deepa234/my-python-app"
         DOCKER_TAG = "latest"
     }
 
